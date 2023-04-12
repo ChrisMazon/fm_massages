@@ -3,6 +3,7 @@
 # Table name: appointments
 #
 #  id             :integer          not null, primary key
+#  date           :datetime
 #  massage_type   :string
 #  price          :string
 #  created_at     :datetime         not null

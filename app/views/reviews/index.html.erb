@@ -28,23 +28,18 @@
           Body
         </label>
 
-        <input type="text" id="body_box" name="query_body">
+        <textarea id="body_box" name="query_body" rows="3"></textarea>
       </div>
 
       <div>
-        <label for="rating_box">
-          Rating
-        </label>
-
-        <input type="text" id="rating_box" name="query_rating">
-      </div>
-
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
-
-        <input type="text" id="user_id_box" name="query_user_id">
+        <label for="rating_box">Rating</label>
+        <select id="rating_box" name="query_rating">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
       </div>
 
       <button>
@@ -92,40 +87,40 @@
       </tr>
 
       <% @list_of_reviews.each do |a_review| %>
-      <tr>
-        <td>
-          <%= a_review.id %>
-        </td>
+        <tr>
+          <td>
+            <%= a_review.id %>
+          </td>
 
-        <td>
-          <%= a_review.title %>
-        </td>
+          <td>
+            <%= a_review.title %>
+          </td>
 
-        <td>
-          <%= a_review.body %>
-        </td>
+          <td>
+            <%= a_review.body %>
+          </td>
 
-        <td>
-          <%= a_review.rating %>
-        </td>
+          <td>
+            <%= a_review.rating %>
+          </td>
 
-        <td>
-          <%= a_review.user_id %>
-        </td>
+          <td>
+            <%= a_review.user_id %>
+          </td>
 
-        <td>
-          <%= time_ago_in_words(a_review.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_review.updated_at) %> ago
-        </td>
+          <td>
+            <%= time_ago_in_words(a_review.created_at) %> ago
+          </td>
+          <td>
+            <%= time_ago_in_words(a_review.updated_at) %> ago
+          </td>
 
-        <td>
-          <a href="/reviews/<%= a_review.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
+          <td>
+            <a href="/reviews/<%= a_review.id %>">
+              Show details
+            </a>
+          </td>
+        </tr>
       <% end %>
     </table>
   </div>

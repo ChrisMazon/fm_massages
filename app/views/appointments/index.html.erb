@@ -36,7 +36,7 @@
           Massage type
         </label>
 
-        <input type="text" id="massage_type_box" name="query_massage_type">
+        <input type="text" id="massage_type_box" name="query_massage_type" value="<%= params[:massage_type] %>">
       </div>
 
       <div>
@@ -44,7 +44,7 @@
           Price
         </label>
 
-        <input type="text" id="price_box" name="query_price">
+        <input type="text" id="price_box" name="query_price" value="<%= params[:price] %>">
       </div>
 
       <button>
@@ -132,3 +132,34 @@
 </div>
 
 <hr>
+
+<table border="1" width="100%">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% time = Time.new(2023, 04, 10, 8, 0, 0, "+00:00") %>
+    <% 23.times do |i| %>
+    <tr>
+      <th><%= time.strftime("%I:%M %p") %></th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <% time += 30.minutes %>
+    <% end %>
+  </tbody>
+</table>

@@ -22,7 +22,7 @@ class ReviewsController < ApplicationController
     the_review.title = params.fetch("query_title")
     the_review.body = params.fetch("query_body")
     the_review.rating = params.fetch("query_rating")
-    the_review.user_id = params.fetch("query_user_id")
+    the_review.user_id = session.fetch(:user_id)
 
     if the_review.valid?
       the_review.save
@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
     the_review.title = params.fetch("query_title")
     the_review.body = params.fetch("query_body")
     the_review.rating = params.fetch("query_rating")
-    the_review.user_id = params.fetch("query_user_id")
+    the_review.user_id = session.fetch(:user_id)
 
     if the_review.valid?
       the_review.save
