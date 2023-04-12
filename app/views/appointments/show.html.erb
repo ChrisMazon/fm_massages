@@ -1,0 +1,116 @@
+<div>
+  <div>
+    <h1>
+      Appointment #<%= @the_appointment.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/appointments">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_appointment/<%= @the_appointment.id %>">
+          Delete appointment
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Time chosen
+      </dt>
+      <dd>
+        <%= @the_appointment.time_chosen_id %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_appointment.user_id %>
+      </dd>
+
+      <dt>
+        Massage type
+      </dt>
+      <dd>
+        <%= @the_appointment.massage_type %>
+      </dd>
+
+      <dt>
+        Price
+      </dt>
+      <dd>
+        <%= @the_appointment.price %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_appointment.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_appointment.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit appointment
+    </h2>
+
+    <form action="/modify_appointment/<%= @the_appointment.id %>"  method="post" >
+      <div>
+        <label for="time_chosen_id_box">
+          Time chosen
+        </label>
+
+        <input type="text" id="time_chosen_id_box" name="query_time_chosen_id" value="<%= @the_appointment.time_chosen_id %>">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_appointment.user_id %>">
+      </div>
+
+      <div>
+        <label for="massage_type_box">
+          Massage type
+        </label>
+
+        <input type="text" id="massage_type_box" name="query_massage_type" value="<%= @the_appointment.massage_type %>">
+      </div>
+
+      <div>
+        <label for="price_box">
+          Price
+        </label>
+
+        <input type="text" id="price_box" name="query_price" value="<%= @the_appointment.price %>">
+      </div>
+
+      <button>
+        Update appointment
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

@@ -1,0 +1,134 @@
+<div>
+  <div>
+    <h1>
+      List of all appointments
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new appointment
+    </h2>
+
+    <form action="/insert_appointment" method="post">
+      <div>
+        <label for="time_chosen_id_box">
+          Time chosen
+        </label>
+
+        <input type="text" id="time_chosen_id_box" name="query_time_chosen_id">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id">
+      </div>
+
+      <div>
+        <label for="massage_type_box">
+          Massage type
+        </label>
+
+        <input type="text" id="massage_type_box" name="query_massage_type">
+      </div>
+
+      <div>
+        <label for="price_box">
+          Price
+        </label>
+
+        <input type="text" id="price_box" name="query_price">
+      </div>
+
+      <button>
+        Create appointment
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Time chosen
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Massage type
+        </th>
+
+        <th>
+          Price
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_appointments.each do |an_appointment| %>
+      <tr>
+        <td>
+          <%= an_appointment.id %>
+        </td>
+
+        <td>
+          <%= an_appointment.time_chosen_id %>
+        </td>
+
+        <td>
+          <%= an_appointment.user_id %>
+        </td>
+
+        <td>
+          <%= an_appointment.massage_type %>
+        </td>
+
+        <td>
+          <%= an_appointment.price %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_appointment.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_appointment.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/appointments/<%= an_appointment.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

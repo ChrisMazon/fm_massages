@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Time chosen #<%= @the_time_chosen.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/time_chosens">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_time_chosen/<%= @the_time_chosen.id %>">
+          Delete time chosen
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Time
+      </dt>
+      <dd>
+        <%= @the_time_chosen.time %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_time_chosen.user_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_time_chosen.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_time_chosen.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit time chosen
+    </h2>
+
+    <form action="/modify_time_chosen/<%= @the_time_chosen.id %>"  method="post" >
+      <div>
+        <label for="time_box">
+          Time
+        </label>
+
+        <input type="time" id="time_box" name="query_time" value="<%= @the_time_chosen.time %>">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_time_chosen.user_id %>">
+      </div>
+
+      <button>
+        Update time chosen
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

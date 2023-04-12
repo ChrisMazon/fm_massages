@@ -1,0 +1,102 @@
+<div>
+  <div>
+    <h1>
+      List of all time chosens
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new time chosen
+    </h2>
+
+    <form action="/insert_time_chosen" method="post">
+      <div>
+        <label for="time_box">
+          Time
+        </label>
+
+        <input type="time" id="time_box" name="query_time">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id">
+      </div>
+
+      <button>
+        Create time chosen
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Time
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_time_chosens.each do |a_time_chosen| %>
+      <tr>
+        <td>
+          <%= a_time_chosen.id %>
+        </td>
+
+        <td>
+          <%= a_time_chosen.time %>
+        </td>
+
+        <td>
+          <%= a_time_chosen.user_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_time_chosen.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_time_chosen.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/time_chosens/<%= a_time_chosen.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
