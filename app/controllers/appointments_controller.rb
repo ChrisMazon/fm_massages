@@ -1,4 +1,19 @@
 class AppointmentsController < ApplicationController
+  def home
+
+    render({ :template => "appointments/home.html.erb" })
+  end
+
+  def about
+
+    render({ :template => "appointments/about.html.erb" })
+  end
+
+  def pricing
+
+    render({ :template => "appointments/pricing.html.erb" })
+  end
+
   def index
     matching_appointments = Appointment.all
 

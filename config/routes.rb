@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
-  # Routes for the User account:
+  get("/", { :controller => "appointments", :action => "home" })
 
+  get("/home", { :controller => "appointments", :action => "home" })
+
+  get("/about", { :controller => "appointments", :action => "about" })
+
+  get("/pricing", { :controller => "appointments", :action => "pricing" })
+
+  # Routes for the User account:
   # SIGN UP FORM
   get("/user_sign_up", { :controller => "user_authentication", :action => "sign_up_form" })        
   # CREATE RECORD
@@ -26,6 +33,24 @@ Rails.application.routes.draw do
              
   #------------------------------
 
+    # Routes for the Appointment resource:
+
+  # CREATE
+  post("/insert_appointment", { :controller => "appointments", :action => "create" })
+          
+  # READ
+  get("/appointments", { :controller => "appointments", :action => "index" })
+  
+  get("/appointments/:path_id", { :controller => "appointments", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_appointment/:path_id", { :controller => "appointments", :action => "update" })
+  
+  # DELETE
+  get("/delete_appointment/:path_id", { :controller => "appointments", :action => "destroy" })
+
+  #------------------------------
 
   # Routes for the Review resource:
 
@@ -65,22 +90,4 @@ Rails.application.routes.draw do
 
   #------------------------------
 
-  # Routes for the Appointment resource:
-
-  # CREATE
-  post("/insert_appointment", { :controller => "appointments", :action => "create" })
-          
-  # READ
-  get("/appointments", { :controller => "appointments", :action => "index" })
-  
-  get("/appointments/:path_id", { :controller => "appointments", :action => "show" })
-  
-  # UPDATE
-  
-  post("/modify_appointment/:path_id", { :controller => "appointments", :action => "update" })
-  
-  # DELETE
-  get("/delete_appointment/:path_id", { :controller => "appointments", :action => "destroy" })
-
-  #------------------------------
 end
