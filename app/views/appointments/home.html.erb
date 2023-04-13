@@ -8,7 +8,14 @@
 
 <h2>Location</h2>
 <p> We are currently located in Chicago, Illinois. Book an appointment for full address.</p>
-<button><a href="/appointments">Book an Appointment<a></button>
+<button>
+<% if @current_user == nil %>
+<a href="/user_sign_in">Book an Appointment<a>
+<% else %>
+<a href="/appointments">Book an Appointment<a>
+<% end %>
+</button>
+
 
 <h2>Availability</h2>
 <p>Im available almost everyday! Give me a call for assurance.</p>
