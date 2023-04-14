@@ -34,10 +34,11 @@ class AppointmentsController < ApplicationController
 
   def create
     the_appointment = Appointment.new
-    the_appointment.time_chosen_id = params.fetch("query_time_chosen_id")
     the_appointment.user_id = session.fetch(:user_id)
     the_appointment.massage_type = params.fetch("query_massage_type")
     the_appointment.price = params.fetch("query_price")
+    the_appointment.time_chosen = params.fetch("query_time_chosen")
+    the_appointment.date = params.fetch("query_date")
 
     if the_appointment.valid?
       the_appointment.save
@@ -51,7 +52,7 @@ class AppointmentsController < ApplicationController
     the_id = params.fetch("path_id")
     the_appointment = Appointment.where({ :id => the_id }).at(0)
 
-    the_appointment.time_chosen_id = params.fetch("query_time_chosen_id")
+    the_appointment.time_chosen = params.fetch("query_time_chosen")
     the_appointment.user_id = session.fetch(:user_id)
     the_appointment.massage_type = params.fetch("query_massage_type")
     the_appointment.price = params.fetch("query_price")

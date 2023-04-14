@@ -18,8 +18,6 @@ class User < ApplicationRecord
 
   has_many(:appointments, :class_name => "Appointment", :foreign_key => "user_id", :dependent => :destroy)
 
-  has_many(:time_chosens, :class_name => "TimeChosen", :foreign_key => "user_id", :dependent => :destroy)
-
   validates :email, :uniqueness => { :case_sensitive => false }
   validates :email, :presence => true
   has_secure_password

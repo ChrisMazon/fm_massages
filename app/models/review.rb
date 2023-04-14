@@ -12,4 +12,8 @@
 #
 class Review < ApplicationRecord
   belongs_to(:user, :required => true, :class_name => "User", :foreign_key => "user_id")
+
+  validates :title, presence: true
+  validates :body, presence: true
+  validates :rating, presence: true
 end
