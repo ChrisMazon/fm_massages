@@ -10,17 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_13_171840) do
+ActiveRecord::Schema.define(version: 2023_04_14_171614) do
 
   create_table "appointments", force: :cascade do |t|
-    t.integer "time_chosen_id"
     t.integer "user_id"
-    t.string "massage_type"
-    t.string "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "date"
     t.time "time_chosen"
+    t.integer "massage_id"
+  end
+
+  create_table "massages", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "duration"
+    t.integer "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -30,6 +37,7 @@ ActiveRecord::Schema.define(version: 2023_04_13_171840) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "massage_id"
   end
 
   create_table "users", force: :cascade do |t|

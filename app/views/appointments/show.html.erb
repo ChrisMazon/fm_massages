@@ -6,111 +6,116 @@
 
     <div>
       <div>
-        <a href="/appointments">
-          Go back
-        </a>
+        <button><a href="/appointments">
+            Go back
+          </a></button>
       </div>
 
-      <div>
-        <a href="/delete_appointment/<%= @the_appointment.id %>">
-          Delete appointment
-        </a>
-      </div>
-    </div>
-
-    <dl>
-      <dt>
-        Time chosen
-      </dt>
-      <dd>
-        <%= @the_appointment.time_chosen_id %>
-      </dd>
-
-      <dt>
-        User
-      </dt>
-      <dd>
-        <%= @the_appointment.user_id %>
-      </dd>
-
-      <dt>
-        Massage type
-      </dt>
-      <dd>
-        <%= @the_appointment.massage_type %>
-      </dd>
-
-      <dt>
-        Price
-      </dt>
-      <dd>
-        <%= @the_appointment.price %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_appointment.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_appointment.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
-</div>
-
-<hr>
-
-
-<div>
-  <div>
-    <h2>
-      Edit appointment
-    </h2>
-
-    <form action="/modify_appointment/<%= @the_appointment.id %>"  method="post" >
-      <div>
-        <label for="time_chosen_id_box">
-          Time chosen
-        </label>
-
-        <input type="text" id="time_chosen_id_box" name="query_time_chosen_id" value="<%= @the_appointment.time_chosen_id %>">
-      </div>
-
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
-
-        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_appointment.user_id %>">
-      </div>
-
-      <div>
-        <label for="massage_type_box">
+      <dl>
+        <dt>
           Massage type
-        </label>
+        </dt>
+        <dd>
+          <%= @the_appointment.massage.name %>
+        </dd>
 
-        <input type="text" id="massage_type_box" name="query_massage_type" value="<%= @the_appointment.massage_type %>">
-      </div>
+        <dt>
+          Date chosen
+        </dt>
+        <dd>
+          <%= @the_appointment.date.strftime('%m/%d/%Y') %>
+        </dd>
 
-      <div>
-        <label for="price_box">
+        <dt>
+          Time chosen
+        </dt>
+        <dd>
+          <%= @the_appointment.time_chosen.strftime("%I:%M %p") %>
+        </dd>
+
+        <dt>
           Price
-        </label>
+        </dt>
+        <dd>
+          <%= @the_appointment.massage.price %>
+        </dd>
 
-        <input type="text" id="price_box" name="query_price" value="<%= @the_appointment.price %>">
-      </div>
+        <dt>
+          User
+        </dt>
+        <dd>
+          <%= @the_appointment.user.first_name %> <%= @the_appointment.user.last_name %>
+        </dd>
 
-      <button>
-        Update appointment
-      </button>
-    </form>
+        <dt>
+          Created at
+        </dt>
+        <dd>
+          <%= time_ago_in_words(@the_appointment.created_at) %> ago
+        </dd>
+
+        <dt>
+          Updated at
+        </dt>
+        <dd>
+          <%= time_ago_in_words(@the_appointment.updated_at) %> ago
+        </dd>
+      </dl>
+    </div>
+  </div>
+
+  <hr>
+
+  <div>
+    <div>
+      <h2>
+        Edit appointment
+      </h2>
+
+      <form action="/modify_appointment/<%= @the_appointment.id %>"  method="post" >
+        <div>
+          <label for="massage_box">
+            Massage Type
+          </label>
+
+          <select type="integer" id="massage_box" name="query_massage">
+            <option value="">Select a massage type</option>
+            <% @massages.each do |massage| %>
+              <option value="<%= massage.id %>"><%= massage.name %></option>
+            <% end %>
+          </select>
+        </div>
+
+        <div>
+          <label for="date_box">
+            Date
+          </label>
+
+          <input type="date" id="date_box" name="query_date">
+        </div>
+
+        <div>
+          <label for="time_chosen_box">
+            Time
+          </label>
+
+          <input type="time" id="time_chosen_box" name="query_time_chosen" min="09:00" max="23:00" step="3600" required>
+        </div>
+
+        <button>
+          Update appointment
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <hr>
+  <h2>Or Delete the appointment.</h2>
+  <p><i>This action cannot be undone!</i></p>
+  <div>
+    <button><a href="/delete_appointment/<%= @the_appointment.id %>">
+      Delete appointment
+    </a></button>
   </div>
 </div>
-
 <hr>

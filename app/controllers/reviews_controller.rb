@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   def index
+    @massages = Massage.all
     matching_reviews = Review.all
 
     @list_of_reviews = matching_reviews.order({ :created_at => :desc })
@@ -14,11 +15,17 @@ class ReviewsController < ApplicationController
 
     @the_review = matching_reviews.at(0)
 
-    render({ :template => "reviews/show.html.erb" })
+    if @current_user.id != @the_review.user_id
+      redirect_to("/reviews", { :alert => "Not your review!"})
+    else
+      render({ :template => "reviews/show.html.erb" })
+    end
   end
 
   def create
+    @massages = Massage.all
     the_review = Review.new
+    the_review.massage = Massage.find(params.fetch("query_massage"))
     the_review.title = params.fetch("query_title")
     the_review.body = params.fetch("query_body")
     the_review.rating = params.fetch("query_rating")
@@ -33,6 +40,7 @@ class ReviewsController < ApplicationController
   end
 
   def update
+    @massages = Massage.all
     the_id = params.fetch("path_id")
     the_review = Review.where({ :id => the_id }).at(0)
 

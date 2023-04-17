@@ -1,0 +1,134 @@
+<div>
+  <div>
+    <h1>
+      List of all massages
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new massage
+    </h2>
+
+    <form action="/insert_massage" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="description_box">
+          Description
+        </label>
+
+        <textarea id="description_box" name="query_description" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label for="duration_box">
+          Duration
+        </label>
+
+        <input type="text" id="duration_box" name="query_duration">
+      </div>
+
+      <div>
+        <label for="price_box">
+          Price
+        </label>
+
+        <input type="text" id="price_box" name="query_price">
+      </div>
+
+      <button>
+        Create massage
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Description
+        </th>
+
+        <th>
+          Duration
+        </th>
+
+        <th>
+          Price
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_massages.each do |a_massage| %>
+      <tr>
+        <td>
+          <%= a_massage.id %>
+        </td>
+
+        <td>
+          <%= a_massage.name %>
+        </td>
+
+        <td>
+          <%= a_massage.description %>
+        </td>
+
+        <td>
+          <%= a_massage.duration %>
+        </td>
+
+        <td>
+          <%= a_massage.price %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_massage.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_massage.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/massages/<%= a_massage.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

@@ -7,7 +7,9 @@
 </div>
 
 <hr>
-
+<% if @current_user == nil %>
+  Please sign in to add a review!
+<% else %>
 <div>
   <div>
     <h2>
@@ -42,12 +44,26 @@
         </select>
       </div>
 
+      <div>
+        <label for="massage_box">
+          Massage Type<i>(optional)</i>
+        </label>
+
+        <select type="integer" id="massage_box" name="query_massage">
+          <option value="">Select a massage type</option>
+          <% @massages.each do |massage| %>
+            <option value="<%= massage.id %>"><%= massage.name %></option>
+          <% end %>
+        </select>
+      </div>
+
       <button>
         Create review
       </button>
     </form>
   </div>
 </div>
+<% end %>
 
 <hr>
 <div>
@@ -57,6 +73,10 @@
 
         <th>
           User
+        </th>
+
+        <th>
+          Massage Type
         </th>
 
         <th>
@@ -74,11 +94,16 @@
         <th>
           Created at
         </th>
-
+      
+      <% if @current_user == nil %>
+      <% else %>
+        <% if @current_user.reviews.count >= 1 %>
         <th>
           More Details
         </th>
-
+        <% else %>
+        <% end %>
+      <% end %>
       </tr>
 
       <% @list_of_reviews.each do |a_review| %>
@@ -86,6 +111,15 @@
 
           <td>
             <%= a_review.user.first_name %> <%= a_review.user.last_name %>
+          </td>
+
+          <td>
+            <% if a_review.massage.present? %>
+              <%= a_review.massage.name %>
+            <% else %>
+              
+            <% end %>
+
           </td>
 
           <td>
@@ -103,12 +137,18 @@
           <td>
             <%= time_ago_in_words(a_review.created_at) %> ago
           </td>
-
+      <% if @current_user == nil %>
+      <% else %>
+        <% if a_review.user_id != @current_user.id %>
+        
+        <% else %>
           <td>
             <a href="/reviews/<%= a_review.id %>">
               Show details
             </a>
           </td>
+        <% end %>
+        <% end %>
         </tr>
       <% end %>
     </table>

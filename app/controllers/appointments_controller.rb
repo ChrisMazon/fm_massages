@@ -10,33 +10,47 @@ class AppointmentsController < ApplicationController
   end
 
   def pricing
+    @massages = Massage.all
 
     render({ :template => "appointments/pricing.html.erb" })
   end
 
   def index
+    @massages = Massage.all
+
     matching_appointments = Appointment.all
 
     @list_of_appointments = matching_appointments.order({ :created_at => :desc })
-
-    render({ :template => "appointments/index.html.erb" })
+    
+    if @current_user == nil 
+      redirect_to("/user_sign_up", { :alert => "Please sign in first!"})
+    else
+      render({ :template => "appointments/index.html.erb" })
+    end
   end
 
   def show
+    @massages = Massage.all
+
     the_id = params.fetch("path_id")
 
     matching_appointments = Appointment.where({ :id => the_id })
 
     @the_appointment = matching_appointments.at(0)
 
-    render({ :template => "appointments/show.html.erb" })
+    if @current_user.id != @the_appointment.user_id
+      redirect_to("/appointments", { :alert => "Not your appointment!"})
+    else
+      render({ :template => "appointments/show.html.erb" })
+    end
   end
 
   def create
+    @massages = Massage.all
     the_appointment = Appointment.new
     the_appointment.user_id = session.fetch(:user_id)
-    the_appointment.massage_type = params.fetch("query_massage_type")
-    the_appointment.price = params.fetch("query_price")
+    #the_appointment.massage = params.fetch("query_massage")
+    the_appointment.massage = Massage.find(params.fetch("query_massage"))
     the_appointment.time_chosen = params.fetch("query_time_chosen")
     the_appointment.date = params.fetch("query_date")
 
@@ -54,8 +68,7 @@ class AppointmentsController < ApplicationController
 
     the_appointment.time_chosen = params.fetch("query_time_chosen")
     the_appointment.user_id = session.fetch(:user_id)
-    the_appointment.massage_type = params.fetch("query_massage_type")
-    the_appointment.price = params.fetch("query_price")
+    the_appointment.massage = params.fetch("query_massage")
 
     if the_appointment.valid?
       the_appointment.save

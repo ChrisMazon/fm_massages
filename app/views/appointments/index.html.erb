@@ -17,19 +17,14 @@
     <form action="/insert_appointment" method="post">
 
       <div>
-        <label for="massage_type_box">
+        <label for="massage_box">
           Massage Type
         </label>
 
-        <% if params[:massage_type] %>
-          <input type="text" id="massage_type_box" name="query_massage_type" value="<%= params[:massage_type] %>">
-
-        <% else %>
-          <select type="text" id="massage_type_box" name="query_massage_type" value="<%= params[:massage_type] %>">
-
-            <option value="Individual">Individual Section Massage</option>
-            <option value="Full Body">Full Body Massage</option>
-            <option value="Hot Stones">Full Body & Hot Stones Massage</option>
+        <select type="integer" id="massage_box" name="query_massage">
+          <option value="">Select a massage type</option>
+          <% @massages.each do |massage| %>
+            <option value="<%= massage.id %>"><%= massage.name %></option>
           <% end %>
         </select>
       </div>
@@ -50,11 +45,6 @@
         <input type="time" id="time_chosen_box" name="query_time_chosen" min="09:00" max="23:00" step="3600" required>
       </div>
 
-      <div>
-        <label for="price_box">Price</label>
-        <input type="text" id="price_box" name="query_price" value="<%= params[:price] %>">
-      </div>
-
       <button>
         Create appointment
       </button>
@@ -67,78 +57,85 @@
 
 <hr>
 
-<h1>Your curent Appointments</h1>
-<table border="1">
-  <tr>
-    <th>
-      User
-    </th>
-
-    <th>
-      Massage Type
-    </th>
-
-    <th>
-      Price
-    </th>
-
-    <th>
-      Date
-    </th>
-
-    <th>
-      Time
-    </th>
-
-    <th>
-      Created at
-    </th>
-
-    <th>
-      Updated at
-    </th>
-
-    <th>
-      More Details
-    </th>
-
-  </tr>
-
-  <% @list_of_appointments.where(user_id: @current_user.id).each do |an_appointment| %>
+<% if @current_user == nil %>
+  You are not signed in >:(
+<% elsif  @current_user.appointments.any? %>
+  <h1>Your curent Appointments</h1>
+  <table border="1">
     <tr>
-      <td>
-        <%= an_appointment.user.first_name %> <%= an_appointment.user.last_name %>
-      </td>
+      <th>
+        User
+      </th>
 
-      <td>
-        <%= an_appointment.massage_type %>
-      </td>
+      <th>
+        Massage Type
+      </th>
 
-      <td>
-        <%= an_appointment.price %>
-      </td>
+      <th>
+        Price
+      </th>
 
-      <td>
-        <%= an_appointment.date.strftime('%m/%d/%Y') %>
-      </td>
+      <th>
+        Date
+      </th>
 
-      <td>
-        <%= an_appointment.time_chosen.strftime("%I:%M %p") %>
-      </td>
+      <th>
+        Time
+      </th>
 
-      <td>
-        <%= time_ago_in_words(an_appointment.created_at) %> ago
-      </td>
-      <td>
-        <%= time_ago_in_words(an_appointment.updated_at) %> ago
-      </td>
+      <th>
+        Created at
+      </th>
 
-      <td>
-        <a href="/appointments/<%= an_appointment.id %>">
-          Show details
-        </a>
-      </td>
+      <th>
+        Updated at
+      </th>
+
+      <th>
+        More Details
+      </th>
+
     </tr>
+
+    <% @list_of_appointments.where(user_id: @current_user.id).each do |an_appointment| %>
+      <tr>
+        <td>
+          <%= an_appointment.user.first_name %> <%= an_appointment.user.last_name %>
+        </td>
+
+        <td>
+          <%= an_appointment.massage.name %>
+        </td>
+
+        <td>
+          <%= an_appointment.massage.price %>
+        </td>
+
+        <td>
+          <%= an_appointment.date.strftime('%m/%d/%Y') %>
+        </td>
+
+        <td>
+          <%= an_appointment.time_chosen.strftime("%I:%M %p") %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_appointment.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_appointment.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/appointments/<%= an_appointment.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    <% else %>
+      You have no current appointments. :(
+
   <% end %>
 </table>
 
@@ -154,7 +151,7 @@
         </th>
 
         <th>
-          Massage Typr
+          Massage Type
         </th>
 
         <th>
@@ -177,24 +174,24 @@
           Updated at
         </th>
 
-        <th>
-          More Details
-        </th>
-
       </tr>
 
       <% @list_of_appointments.each do |an_appointment| %>
         <tr>
           <td>
+          <% if an_appointment.user_id == @current_user.id %>
             <%= an_appointment.user.first_name %> <%= an_appointment.user.last_name %>
+          <% else %>
+            Another User
+          </td>
+          <% end %>
+
+          <td>
+            <%= an_appointment.massage.name %>
           </td>
 
           <td>
-            <%= an_appointment.massage_type %>
-          </td>
-
-          <td>
-            <%= an_appointment.price %>
+            <%= an_appointment.massage.price %>
           </td>
 
           <td>
@@ -210,12 +207,6 @@
           </td>
           <td>
             <%= time_ago_in_words(an_appointment.updated_at) %> ago
-          </td>
-
-          <td>
-            <a href="/appointments/<%= an_appointment.id %>">
-              Show details
-            </a>
           </td>
         </tr>
       <% end %>

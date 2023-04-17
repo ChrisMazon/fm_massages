@@ -1,0 +1,12 @@
+class CreateMassages < ActiveRecord::Migration[6.0]
+  def change
+    create_table :massages do |t|
+      t.string :name
+      t.text :description
+      t.string :duration
+      t.integer :price
+
+      t.timestamps
+    end
+  end
+end

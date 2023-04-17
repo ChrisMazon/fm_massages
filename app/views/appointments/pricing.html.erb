@@ -1,4 +1,4 @@
-<h1>Packages</h1>
+<!--h1>Packages</h1>
 <p>These are the different packages I offer, accommodated to your needs.</p>
 
 <h1>Individual</h1>
@@ -25,4 +25,17 @@
   <li>Relaxing or Therapeutic</li>
   <li>20 minutes of Hot Stones</li>
 </ul>
-<button><a href="/appointments?massage_type=Hot Stones&price=80">Book Hot Stone Session!</a></button>
+<button><a href="/appointments?massage_type=Hot Stones&price=80">Book Hot Stone Session!</a></button -->
+
+<h1>Packages</h1>
+<p>These are the different packages I offer, accommodated to your needs.</p>
+
+<% @massages.each do |massage| %>
+<h1><%= massage.name %></h1>
+<h2>$<%= massage.price %>.00</h2>
+<ul>
+  <li><%= massage.description %></li>
+  <li><%= massage.duration %></li>
+</ul>
+<button><a href="/appointments">Book Individual Session!</a></button>
+<% end %>
