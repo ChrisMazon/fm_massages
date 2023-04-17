@@ -37,5 +37,5 @@
   <li><%= massage.description %></li>
   <li><%= massage.duration %></li>
 </ul>
-<button><a href="/appointments">Book Individual Session!</a></button>
+<button><a href="/appointments?massage_id=<%= massage.id %>">Book Individual Session!</a></button>
 <% end %>

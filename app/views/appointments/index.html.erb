@@ -24,7 +24,16 @@
         <select type="integer" id="massage_box" name="query_massage">
           <option value="">Select a massage type</option>
           <% @massages.each do |massage| %>
-            <option value="<%= massage.id %>"><%= massage.name %></option>
+            <% if params[:massage_id].to_i == massage.id %>
+              <option value="<%= massage.id %>" selected>
+                <%= massage.name %>
+              </option>
+            <% else %>
+              <option value="<%= massage.id %>">
+                <%= massage.name %>
+              </option>
+            <% end %>
+            
           <% end %>
         </select>
       </div>
