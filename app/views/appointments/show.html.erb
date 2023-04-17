@@ -6,9 +6,15 @@
 
     <div>
       <div>
-        <button><a href="/appointments">
-            Go back
-          </a></button>
+        <% if @current_user.admin == true %>
+          <button><a href="/dashboard">
+              Go back
+            </a></button>
+        <% else %>
+          <button><a href="/appointments">
+              Go back
+            </a></button>
+        <% end %>
       </div>
 
       <dl>
@@ -41,11 +47,16 @@
         </dd>
 
         <dt>
-          User
+          User's Name
         </dt>
+
         <dd>
-          <%= @the_appointment.user.first_name %> <%= @the_appointment.user.last_name %>
-        </dd>
+          <% if @the_appointment.user_id != nil %>
+            <%= @the_appointment.user.first_name %> <%= @the_appointment.user.last_name %>
+          <% else %>
+            Deleted User
+          </dd>
+        <% end %>
 
         <dt>
           Created at
@@ -114,8 +125,8 @@
   <p><i>This action cannot be undone!</i></p>
   <div>
     <button><a href="/delete_appointment/<%= @the_appointment.id %>">
-      Delete appointment
-    </a></button>
+        Delete appointment
+      </a></button>
   </div>
 </div>
 <hr>

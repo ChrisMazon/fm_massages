@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get("/pricing", { :controller => "appointments", :action => "pricing" })
 
+  get("/dashboard", { :controller => "appointments", :action => "dashboard" })
+
   # CREATE
   post("/insert_massage", { :controller => "massages", :action => "create" })
           
@@ -34,11 +36,17 @@ Rails.application.routes.draw do
 
   # EDIT PROFILE FORM
   get("/edit_user_profile", { :controller => "user_authentication", :action => "edit_profile_form" })
+
+  get("/edit_user_profile/:an_id", { :controller => "user_authentication", :action => "admin_edit_profile_form" }) #test
   # UPDATE RECORD
   post("/modify_user", { :controller => "user_authentication", :action => "update" })
 
+  post("/modify_user/:an_id", { :controller => "user_authentication", :action => "admin_update" })
+
   # DELETE RECORD
   get("/cancel_user_account", { :controller => "user_authentication", :action => "destroy" })
+
+  get("/cancel_user_account/:an_id", { :controller => "user_authentication", :action => "admin_destroy" }) #test
 
   # ------------------------------
 

@@ -34,7 +34,7 @@
           Date
         </label>
 
-        <input type="date" id="date_box" name="query_date">
+        <input type="date" id="date_box" name="query_date" min="<%= Date.today.to_s %>">
       </div>
 
       <div>
@@ -42,7 +42,7 @@
           Time
         </label>
 
-        <input type="time" id="time_chosen_box" name="query_time_chosen" min="09:00" max="23:00" step="3600" required>
+        <input type="time" id="time_chosen_box" name="query_time_chosen" min="08:00" max="20:00" required>
       </div>
 
       <button>

@@ -35,6 +35,25 @@
       </ul>
     </nav>
   <% else %>
+    <% if @current_user.admin == true %>
+    <nav>
+      <a href="/home">Home</a>
+      |
+      <a href="/dashboard">Dashboard</a>
+      |
+      <a href="/about">About</a>
+      |
+      <a href="/pricing">Pricing</a>
+      |
+      <a href="/reviews">Reviews</a>
+      |
+      <a href="/appointments">Book An Appointment!</a>
+      |
+      <a href="/edit_user_profile"><%= @current_user.first_name%></a>
+      |
+      <a href="/user_sign_out">Sign Out</a>
+    </nav>
+    <% else %>
     <nav>
       <a href="/home">Home</a>
       |
@@ -50,6 +69,7 @@
       |
       <a href="/user_sign_out">Sign Out</a>
     </nav>
+    <% end %>
   <% end %>
     <p style="color: green"><%= notice %></p>
 

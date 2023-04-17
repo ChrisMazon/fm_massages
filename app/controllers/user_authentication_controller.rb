@@ -8,18 +8,22 @@ class UserAuthenticationController < ApplicationController
 
   def create_cookie
     user = User.where({ :email => params.fetch("query_email") }).first
-    
+
     the_supplied_password = params.fetch("query_password")
-    
+
     if user != nil
       are_they_legit = user.authenticate(the_supplied_password)
-    
+
       if are_they_legit == false
         redirect_to("/user_sign_in", { :alert => "Incorrect password." })
       else
         session[:user_id] = user.id
-      
-        redirect_to("/", { :notice => "Signed in successfully." })
+        @current_user = user
+        if @current_user.admin == true
+          redirect_to("/dashboard", { :notice => "Signed in successfully. Welcome back #{@current_user.first_name}!" })
+        else
+          redirect_to("/", { :notice => "Signed in successfully. Welcome back #{@current_user.first_name}!" })
+        end
       end
     else
       redirect_to("/user_sign_in", { :alert => "No user with that email address." })
@@ -50,15 +54,78 @@ class UserAuthenticationController < ApplicationController
 
     if save_status == true
       session[:user_id] = @user.id
-   
-      redirect_to("/", { :notice => "User account created successfully."})
+
+      redirect_to("/", { :notice => "User account created successfully." })
     else
       redirect_to("/user_sign_up", { :alert => @user.errors.full_messages.to_sentence })
     end
   end
-    
+
   def edit_profile_form
     render({ :template => "user_authentication/edit_profile.html.erb" })
+  end
+
+=begin
+  def admin_edit_profile_form
+    if @current_user.admin == true 
+      the_id = params.fetch("an_id")
+      @the_user = User.where({ :id => the_id }).at(0)
+    render({ :template => "user_authentication/admin_edit_profile.html.erb" })
+    else
+      redirect_to("/appointments", { :alert => "Not your profile." })
+    end
+  end
+
+  def admin_update
+    the_id = params.fetch("an_id")
+    @the_user = User.where({ :id => the_id }).at(0)
+
+    @the_user.email = params.fetch("query_email")
+    @the_user.first_name = params.fetch("query_first_name")
+    @the_user.last_name = params.fetch("query_last_name")
+    @the_user.age = params.fetch("query_age")
+    @the_user.phone_number = params.fetch("query_phone_number")
+
+    if @the_user.valid?
+      @the_user.save
+
+      redirect_to("/", { :notice => "User account updated successfully." })
+    else
+      render({ :template => "user_authentication/edit_profile_with_errors.html.erb", :alert => @user.errors.full_messages.to_sentence })
+    end
+  end
+=end
+
+  def admin_edit_profile_form
+    if @current_user.admin == true
+      the_id = params.fetch("an_id")
+      @the_user = User.where({ :id => the_id }).at(0)
+      render({ :template => "user_authentication/admin_edit_profile.html.erb" })
+    else
+      redirect_to("/appointments", { :alert => "Not authorized." })
+    end
+  end
+
+  def admin_update
+    if @current_user.admin == true
+      the_id = params.fetch("an_id")
+      @the_user = User.where({ :id => the_id }).at(0)
+
+      @the_user.email = params.fetch("query_email")
+      @the_user.first_name = params.fetch("query_first_name")
+      @the_user.last_name = params.fetch("query_last_name")
+      @the_user.age = params.fetch("query_age")
+      @the_user.phone_number = params.fetch("query_phone_number")
+
+      if @the_user.valid?
+        @the_user.save
+        redirect_to("/dashboard", { :notice => "Clients account updated successfully." })
+      else
+        render({ :template => "user_authentication/admin_edit_profile_with_errors.html.erb", :alert => @user.errors.full_messages.to_sentence })
+      end
+    else
+      redirect_to("/appointments", { :alert => "Not authorized." })
+    end
   end
 
   def update
@@ -70,21 +137,29 @@ class UserAuthenticationController < ApplicationController
     @user.last_name = params.fetch("query_last_name")
     @user.age = params.fetch("query_age")
     @user.phone_number = params.fetch("query_phone_number")
-    
+
     if @user.valid?
       @user.save
 
-      redirect_to("/", { :notice => "User account updated successfully."})
+      redirect_to("/", { :notice => "User account updated successfully." })
     else
-      render({ :template => "user_authentication/edit_profile_with_errors.html.erb" , :alert => @user.errors.full_messages.to_sentence })
+      render({ :template => "user_authentication/edit_profile_with_errors.html.erb", :alert => @user.errors.full_messages.to_sentence })
     end
   end
 
   def destroy
     @current_user.destroy
     reset_session
-    
+
     redirect_to("/", { :notice => "User account cancelled" })
   end
- 
+
+  def admin_destroy
+    if @current_user.admin == true 
+      User.destroy(params[:an_id])
+      redirect_to("/dashboard", { :notice => "User account cancelled" })
+    else
+      redirect_to("/appointments", { :alert => "Not authorized." })
+    end
+  end
 end

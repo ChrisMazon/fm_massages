@@ -109,9 +109,15 @@
       <% @list_of_reviews.each do |a_review| %>
         <tr>
 
+          <% if a_review.user.first_name && a_review.user.last_name == nil %>
+          <td>
+            Deleted user
+          </td>
+          <% else %>
           <td>
             <%= a_review.user.first_name %> <%= a_review.user.last_name %>
           </td>
+          <% end %>
 
           <td>
             <% if a_review.massage.present? %>

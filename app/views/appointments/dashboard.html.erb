@@ -1,0 +1,154 @@
+<h1>Admin's Dashboard</h1>
+
+<h2>All Users</h2>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          First Name
+        </th>
+
+        <th>
+         Last Name
+        </th>
+
+        <th>
+          Email
+        </th>
+
+        <th>
+          Phone Number
+        </th>
+
+        <th>
+          Age
+        </th>
+
+        <th>
+          User ID
+        </th>
+
+        <th>
+          Joined
+        </th>
+      </tr>
+
+      <% @list_of_users.each do |a_user| %>
+        <tr>
+          <td>
+            <%= a_user.first_name %>
+          </td>
+
+          <td>
+            <%= a_user.last_name %>
+          </td>
+
+          <td>
+            <%= a_user.email %>
+          </td>
+
+          <td>
+            <%= a_user.phone_number %>
+          </td>
+
+          <td>
+            <%= a_user.age %>
+          </td>
+
+          <td>
+            <%= a_user.id %>
+          </td>
+
+          <td>
+            <%= time_ago_in_words(a_user.created_at) %> ago
+          </td>
+
+          <td>
+            <a href="/edit_user_profile/<%= a_user.id %>">Edit Clients Profile.</a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<h2>All appointments</h2>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Client's Name
+        </th>
+
+        <th>
+          Massage Type
+        </th>
+
+        <th>
+          Price
+        </th>
+
+        <th>
+          Date
+        </th>
+
+        <th>
+          Time
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+          Edit App.
+        </th>
+      </tr>
+
+      <% @list_of_appointments.each do |an_appointment| %>
+        <tr>
+          <td>
+            <% if an_appointment.user.present? %>
+              <%= an_appointment.user.first_name %> <%= an_appointment.user.last_name %>
+            <% else %>
+              Deleted User
+            <% end %>
+          </td>
+
+          <td>
+            <%= an_appointment.massage.name %>
+          </td>
+
+          <td>
+            <%= an_appointment.massage.price %>
+          </td>
+
+          <td>
+            <%= an_appointment.date.strftime('%m/%d/%Y') %>
+          </td>
+
+          <td>
+            <%= an_appointment.time_chosen.strftime("%I:%M %p") %>
+          </td>
+
+          <td>
+            <%= time_ago_in_words(an_appointment.created_at) %> ago
+          </td>
+          <td>
+            <%= time_ago_in_words(an_appointment.updated_at) %> ago
+          </td>
+
+          <td>
+            <a href="/appointments/<%= an_appointment.id %>">Edit Clients App.</a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

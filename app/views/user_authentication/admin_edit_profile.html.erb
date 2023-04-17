@@ -1,0 +1,43 @@
+<div>
+  <h5>
+    Edit User Account
+  </h5>
+
+  <div>
+    <form action="/modify_user/<%=@the_user.id%>" method="post">
+      <% if @the_user %>
+      <div>
+        <label for="first_name_box">First name</label>
+        <input type="text" id="first_name_box" name="query_first_name" value="<%= @the_user.first_name %>">
+      </div>
+      <div>
+        <label for="last_name_box">Last name</label>
+        <input type="text" id="last_name_box" name="query_last_name" value="<%= @the_user.last_name %>">
+      </div>
+      <div>
+        <label for="email_box">Email</label>
+        <input id="email_box" name="query_email" value="<%= @the_user.email %>">
+      </div>
+      <div>
+        <label for="age_box">Age</label>
+        <input id="age_box" name="query_age" value="<%= @the_user.age %>">
+      </div>
+      <div>
+        <label for="phone_number_box">Phone number</label>
+        <input id="phone_number_box" name="query_phone_number" value="<%= @the_user.phone_number %>">
+      </div>
+
+      <button>
+        Update account
+      </button>
+      <% else %>
+      <p>User not found</p>
+      <% end %>
+    </form>
+  </div>
+</div>
+
+
+<h3>Or</h3>
+<h4>Delete Account</h4>
+<button><a href="/cancel_user_account/<%=@the_user.id%>">Delete Client's Account</a></button>
