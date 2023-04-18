@@ -1,14 +1,18 @@
 class AppointmentsController < ApplicationController
   def dashboard
-    @massages = Massage.all
-    matching_appointments = Appointment.all
+    if @current_user.admin == true
+      @massages = Massage.all
+      matching_appointments = Appointment.all
 
-    @list_of_appointments = matching_appointments.order({ :created_at => :desc })
+      @list_of_appointments = matching_appointments.order({ :date => :asc })
 
-    matching_users = User.all
-    @list_of_users = matching_users.order({ :created_at => :desc })
+      matching_users = User.all
+      @list_of_users = matching_users.order({ :created_at => :desc })
 
-    render({ :template => "appointments/dashboard.html.erb" })
+      render({ :template => "appointments/dashboard.html.erb" })
+    else
+      redirect_to("/", { :alert => "Nah b." })
+    end
   end
 
   def home
@@ -30,7 +34,7 @@ class AppointmentsController < ApplicationController
 
     matching_appointments = Appointment.all
 
-    @list_of_appointments = matching_appointments.order({ :created_at => :desc })
+    @list_of_appointments = matching_appointments.order({ :date => :asc })
 
     if @current_user == nil
       redirect_to("/user_sign_up", { :alert => "Please sign in first!" })
@@ -65,6 +69,7 @@ class AppointmentsController < ApplicationController
     the_appointment.massage = Massage.find(params.fetch("query_massage"))
     the_appointment.time_chosen = params.fetch("query_time_chosen")
     the_appointment.date = params.fetch("query_date")
+    the_appointment.set_status_today_if_appointment_is_today
 
     if the_appointment.valid?
       the_appointment.save
@@ -97,6 +102,10 @@ class AppointmentsController < ApplicationController
 
     the_appointment.destroy
 
-    redirect_to("/appointments", { :notice => "Appointment deleted successfully." })
+    if @current_user.admin = true
+      redirect_to("/dashboard", { :notice => "Appointment deleted successfully." })
+    else
+      redirect_to("/appointments", { :notice => "Appointment deleted successfully." })
+    end
   end
 end

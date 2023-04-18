@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_14_171614) do
+ActiveRecord::Schema.define(version: 2023_04_17_184658) do
 
   create_table "appointments", force: :cascade do |t|
     t.integer "user_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2023_04_14_171614) do
     t.datetime "date"
     t.time "time_chosen"
     t.integer "massage_id"
+    t.string "status", default: "upcoming"
   end
 
   create_table "massages", force: :cascade do |t|

@@ -1,38 +1,9 @@
-<!--h1>Packages</h1>
-<p>These are the different packages I offer, accommodated to your needs.</p>
-
-<h1>Individual</h1>
-<h3>$$$</h3>
-<ul>
-  <li>Individual body part or in pain.</li>
-  <li>Around 20-30 minutes</li>
-  <li>Relaxing or Therapeutic</li>
-</ul>
-<button><a href="/appointments?massage_type=Individual&price=30">Book Individual Session!</a></button>
-
-<h1>Full Body</h1>
-<h3>$$$</h3>
-<ul>
-  <li>60 Minutes Full Body Massage</li>
-  <li>Relaxing or Therapeutic</li>
-</ul>
-<button><a href="/appointments?massage_type=Full Body&price=60">Book Full Body Session!</a></button>
-
-<h1>Hot Stones</h1>
-<h3>$$$</h3>
-<ul>
-  <li>60 Minutes Full Body Massage</li>
-  <li>Relaxing or Therapeutic</li>
-  <li>20 minutes of Hot Stones</li>
-</ul>
-<button><a href="/appointments?massage_type=Hot Stones&price=80">Book Hot Stone Session!</a></button -->
-
 <h1>Packages</h1>
 <p>These are the different packages I offer, accommodated to your needs.</p>
 
 <% @massages.each do |massage| %>
 <h1><%= massage.name %></h1>
-<h2>$<%= massage.price %>.00</h2>
+<h2><%= number_to_currency(massage.price, unit: "$", precision: 2) %></h2>
 <ul>
   <li><%= massage.description %></li>
   <li><%= massage.duration %></li>

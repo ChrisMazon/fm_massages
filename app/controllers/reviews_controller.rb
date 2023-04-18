@@ -25,11 +25,16 @@ class ReviewsController < ApplicationController
   def create
     @massages = Massage.all
     the_review = Review.new
-    the_review.massage = Massage.find(params.fetch("query_massage"))
+    # the_review.massage = Massage.find(params.fetch("query_massage"))
     the_review.title = params.fetch("query_title")
     the_review.body = params.fetch("query_body")
     the_review.rating = params.fetch("query_rating")
     the_review.user_id = session.fetch(:user_id)
+
+    if params[:query_massage].present?
+      the_review.massage = Massage.find(params.fetch(:query_massage))
+    end
+  
 
     if the_review.valid?
       the_review.save

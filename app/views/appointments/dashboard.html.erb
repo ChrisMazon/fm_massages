@@ -32,6 +32,10 @@
         <th>
           Joined
         </th>
+
+        <th>
+          Edit Profile
+        </th>
       </tr>
 
       <% @list_of_users.each do |a_user| %>
@@ -49,7 +53,7 @@
           </td>
 
           <td>
-            <%= a_user.phone_number %>
+            <%= number_to_phone(a_user.phone_number, area_code: true) %>
           </td>
 
           <td>
@@ -72,6 +76,175 @@
     </table>
   </div>
 </div>
+
+<hr>
+
+<h2>Todays appointments</h2>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Client's Name
+        </th>
+
+        <th>
+          Massage Type
+        </th>
+
+        <th>
+          Price
+        </th>
+
+        <th>
+          Date
+        </th>
+
+        <th>
+          Time
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+          Edit App.
+        </th>
+      </tr>
+
+      <% @list_of_appointments.each do |an_appointment| %>
+      <% if an_appointment.status == "today" %>
+        <tr>
+          <td>
+            <% if an_appointment.user.present? %>
+              <%= an_appointment.user.first_name %> <%= an_appointment.user.last_name %>
+            <% else %>
+              Deleted User
+            <% end %>
+          </td>
+
+          <td>
+            <%= an_appointment.massage.name %>
+          </td>
+
+          <td>
+            <%= an_appointment.massage.price %>
+          </td>
+
+          <td>
+            <%= an_appointment.date.strftime('%m/%d/%Y') %>
+          </td>
+
+          <td>
+            <%= an_appointment.time_chosen.strftime("%I:%M %p") %>
+          </td>
+
+          <td>
+            <%= time_ago_in_words(an_appointment.created_at) %> ago
+          </td>
+          <td>
+            <%= time_ago_in_words(an_appointment.updated_at) %> ago
+          </td>
+
+          <td>
+            <a href="/appointments/<%= an_appointment.id %>">Edit Clients App.</a>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
+<h2>Upcoming appointments</h2>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Client's Name
+        </th>
+
+        <th>
+          Massage Type
+        </th>
+
+        <th>
+          Price
+        </th>
+
+        <th>
+          Date
+        </th>
+
+        <th>
+          Time
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+          Edit App.
+        </th>
+      </tr>
+
+      <% @list_of_appointments.each do |an_appointment| %>
+      <% if an_appointment.status == "upcoming" %>
+        <tr>
+          <td>
+            <% if an_appointment.user.present? %>
+              <%= an_appointment.user.first_name %> <%= an_appointment.user.last_name %>
+            <% else %>
+              Deleted User
+            <% end %>
+          </td>
+
+          <td>
+            <%= an_appointment.massage.name %>
+          </td>
+
+          <td>
+            <%= an_appointment.massage.price %>
+          </td>
+
+          <td>
+            <%= an_appointment.date.strftime('%m/%d/%Y') %>
+          </td>
+
+          <td>
+            <%= an_appointment.time_chosen.strftime("%I:%M %p") %>
+          </td>
+
+          <td>
+            <%= time_ago_in_words(an_appointment.created_at) %> ago
+          </td>
+          <td>
+            <%= time_ago_in_words(an_appointment.updated_at) %> ago
+          </td>
+
+          <td>
+            <a href="/appointments/<%= an_appointment.id %>">Edit Clients App.</a>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
 
 <h2>All appointments</h2>
 <div>

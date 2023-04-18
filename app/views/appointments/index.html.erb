@@ -33,7 +33,7 @@
                 <%= massage.name %>
               </option>
             <% end %>
-            
+
           <% end %>
         </select>
       </div>
@@ -52,6 +52,10 @@
         </label>
 
         <input type="time" id="time_chosen_box" name="query_time_chosen" min="08:00" max="20:00" required>
+      </div>
+
+      <div>
+        <input type="hidden" id="status_box" name="query_status">
       </div>
 
       <button>
@@ -141,16 +145,14 @@
           </a>
         </td>
       </tr>
-      <% end %>
-    <% else %>
-      You have no current appointments. :(
+    <% end %>
+  <% else %>
+    You currently have no appointments. 😔
 
   <% end %>
 </table>
-
 <hr>
-
-<h1>All appointments</h1>
+<h1>Today's appointments</h1>
 <div>
   <div>
     <table border="1">
@@ -186,72 +188,118 @@
       </tr>
 
       <% @list_of_appointments.each do |an_appointment| %>
-        <tr>
-          <td>
-          <% if an_appointment.user_id == @current_user.id %>
-            <%= an_appointment.user.first_name %> <%= an_appointment.user.last_name %>
-          <% else %>
-            Another User
-          </td>
-          <% end %>
+        <% if an_appointment.status == "today" %>
+          <tr>
+            <td>
+              <% if an_appointment.user_id == @current_user.id %>
+                <%= an_appointment.user.first_name %> <%= an_appointment.user.last_name %>
+              <% else %>
+                Another User
+              </td>
+            <% end %>
 
-          <td>
-            <%= an_appointment.massage.name %>
-          </td>
+            <td>
+              <%= an_appointment.massage.name %>
+            </td>
 
-          <td>
-            <%= an_appointment.massage.price %>
-          </td>
+            <td>
+              <%= an_appointment.massage.price %>
+            </td>
 
-          <td>
-            <%= an_appointment.date.strftime('%m/%d/%Y') %>
-          </td>
+            <td>
+              <%= an_appointment.date.strftime('%m/%d/%Y') %>
+            </td>
 
-          <td>
-            <%= an_appointment.time_chosen.strftime("%I:%M %p") %>
-          </td>
+            <td>
+              <%= an_appointment.time_chosen.strftime("%I:%M %p") %>
+            </td>
 
-          <td>
-            <%= time_ago_in_words(an_appointment.created_at) %> ago
-          </td>
-          <td>
-            <%= time_ago_in_words(an_appointment.updated_at) %> ago
-          </td>
-        </tr>
+            <td>
+              <%= time_ago_in_words(an_appointment.created_at) %> ago
+            </td>
+            <td>
+              <%= time_ago_in_words(an_appointment.updated_at) %> ago
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+</div>
+<hr>
+
+<h1>Upcoming Appointments</h1>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          User
+        </th>
+
+        <th>
+          Massage Type
+        </th>
+
+        <th>
+          Price
+        </th>
+
+        <th>
+          Date
+        </th>
+
+        <th>
+          Time
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+      </tr>
+
+      <% @list_of_appointments.each do |an_appointment| %>
+        <% if an_appointment.status == "upcoming" %>
+          <tr>
+            <td>
+              <% if an_appointment.user_id == @current_user.id %>
+                <%= an_appointment.user.first_name %> <%= an_appointment.user.last_name %>
+              <% else %>
+                Another User
+              </td>
+            <% end %>
+
+            <td>
+              <%= an_appointment.massage.name %>
+            </td>
+
+            <td>
+              <%= an_appointment.massage.price %>
+            </td>
+
+            <td>
+              <%= an_appointment.date.strftime('%m/%d/%Y') %>
+            </td>
+
+            <td>
+              <%= an_appointment.time_chosen.strftime("%I:%M %p") %>
+            </td>
+
+            <td>
+              <%= time_ago_in_words(an_appointment.created_at) %> ago
+            </td>
+            <td>
+              <%= time_ago_in_words(an_appointment.updated_at) %> ago
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </table>
   </div>
 </div>
 
-<hr>
-
-<!-- table border="1" width="100%">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Monday</th>
-      <th>Tuesday</th>
-      <th>Wednesday</th>
-      <th>Thursday</th>
-      <th>Friday</th>
-      <th>Saturday</th>
-      <th>Sunday</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% time = Time.new(2023, 04, 10, 8, 0, 0, "+00:00") %>
-    <% 23.times do |i| %>
-      <tr>
-        <th><%= time.strftime("%I:%M %p") %></th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <% time += 30.minutes %>
-    <% end %>
-  </tbody>
-</table -->

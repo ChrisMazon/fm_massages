@@ -8,64 +8,148 @@
 
 <hr>
 <% if @current_user == nil %>
-  Please sign in to add a review!
+  Please sign in to add a review! 🙂
 <% else %>
-<div>
   <div>
-    <h2>
-      Add a new review
-    </h2>
+    <div>
+      <h2>
+        Add a new review
+      </h2>
 
-    <form action="/insert_review" method="post">
-      <div>
-        <label for="title_box">
-          Title
-        </label>
+      <form action="/insert_review" method="post">
+        <div>
+          <label for="title_box">
+            Title
+          </label>
 
-        <input type="text" id="title_box" name="query_title">
-      </div>
+          <input type="text" id="title_box" name="query_title">
+        </div>
 
-      <div>
-        <label for="body_box">
-          Body
-        </label>
+        <div>
+          <label for="body_box">
+            Body
+          </label>
 
-        <textarea id="body_box" name="query_body" rows="3"></textarea>
-      </div>
+          <textarea id="body_box" name="query_body" rows="3"></textarea>
+        </div>
 
-      <div>
-        <label for="rating_box">Rating</label>
-        <select id="rating_box" name="query_rating">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </div>
+        <div>
+          <label for="rating_box">Rating</label>
+          <select id="rating_box" name="query_rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
 
-      <div>
-        <label for="massage_box">
-          Massage Type<i>(optional)</i>
-        </label>
+        <div>
+          <label for="massage_box">
+            Massage Type<i>(optional)</i>
+          </label>
 
-        <select type="integer" id="massage_box" name="query_massage">
-          <option value="">Select a massage type</option>
-          <% @massages.each do |massage| %>
-            <option value="<%= massage.id %>"><%= massage.name %></option>
-          <% end %>
-        </select>
-      </div>
+          <select type="integer" id="massage_box" name="query_massage">
+            <option value="">Select a massage type</option>
+            <% @massages.each do |massage| %>
+              <option value="<%= massage.id %>"><%= massage.name %></option>
+            <% end %>
+          </select>
+        </div>
 
-      <button>
-        Create review
-      </button>
-    </form>
+        <button>
+          Create review
+        </button>
+      </form>
+    </div>
   </div>
-</div>
 <% end %>
 
 <hr>
+
+<% if @current_user == nil %>
+
+<% else %>
+  <% if @current_user.reviews.any? %>
+    <h1>Your Reviews</h1>
+    <table border="1">
+      <tr>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Massage Type
+        </th>
+
+        <th>
+          Rating
+        </th>
+
+        <th>
+          Title
+        </th>
+
+        <th>
+          Body
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Edit your review.
+        </th>
+      </tr>
+
+      <% @list_of_reviews.where(user_id: @current_user.id).each do |a_review| %>
+        <tr>
+          <td>
+            <%= a_review.user.first_name %> <%= a_review.user.last_name %>
+          </td>
+
+          <td>
+            <% if a_review.massage.present? %>
+              <%= a_review.massage.name %>
+            <% else %>
+
+            <% end %>
+          </td>
+
+          <td>
+            <%= a_review.rating %>
+          </td>
+
+          <td>
+            <%= a_review.title %>
+          </td>
+
+          <td>
+            <%= a_review.body %>
+          </td>
+
+          <td>
+            <%= time_ago_in_words(a_review.created_at) %> ago
+          </td>
+
+          <td>
+            <a href="/reviews/<%= a_review.id %>">
+              Show details
+            </a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <hr>
+  <% else %>
+    You currently have no reviews! 🥲
+    <hr>
+  <% end %>
+<% end %>
+
+<h2>Reviews (<%= @list_of_reviews.count%>)</h2>
 <div>
   <div>
     <table border="1">
@@ -94,36 +178,36 @@
         <th>
           Created at
         </th>
-      
-      <% if @current_user == nil %>
-      <% else %>
-        <% if @current_user.reviews.count >= 1 %>
-        <th>
-          More Details
-        </th>
+
+        <% if @current_user == nil %>
         <% else %>
+          <% if @current_user.reviews.count >= 1 %>
+            <th>
+              More Details
+            </th>
+          <% else %>
+          <% end %>
         <% end %>
-      <% end %>
       </tr>
 
       <% @list_of_reviews.each do |a_review| %>
         <tr>
 
           <% if a_review.user.first_name && a_review.user.last_name == nil %>
-          <td>
-            Deleted user
-          </td>
+            <td>
+              Deleted user
+            </td>
           <% else %>
-          <td>
-            <%= a_review.user.first_name %> <%= a_review.user.last_name %>
-          </td>
+            <td>
+              <%= a_review.user.first_name %> <%= a_review.user.last_name %>
+            </td>
           <% end %>
 
           <td>
             <% if a_review.massage.present? %>
               <%= a_review.massage.name %>
             <% else %>
-              
+
             <% end %>
 
           </td>
@@ -143,18 +227,18 @@
           <td>
             <%= time_ago_in_words(a_review.created_at) %> ago
           </td>
-      <% if @current_user == nil %>
-      <% else %>
-        <% if a_review.user_id != @current_user.id %>
-        
-        <% else %>
-          <td>
-            <a href="/reviews/<%= a_review.id %>">
-              Show details
-            </a>
-          </td>
-        <% end %>
-        <% end %>
+          <% if @current_user == nil %>
+          <% else %>
+            <% if a_review.user_id != @current_user.id %>
+
+            <% else %>
+              <td>
+                <a href="/reviews/<%= a_review.id %>">
+                  Show details
+                </a>
+              </td>
+            <% end %>
+          <% end %>
         </tr>
       <% end %>
     </table>

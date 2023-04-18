@@ -23,7 +23,7 @@ class MassagesController < ApplicationController
     the_massage.description = params.fetch("query_description")
     the_massage.duration = params.fetch("query_duration")
     the_massage.price = params.fetch("query_price")
-
+    
     if the_massage.valid?
       the_massage.save
       redirect_to("/massages", { :notice => "Massage created successfully." })
