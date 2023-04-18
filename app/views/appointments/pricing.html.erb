@@ -1,12 +1,30 @@
-<h1>Packages</h1>
-<p>These are the different packages I offer, accommodated to your needs.</p>
-
-<% @massages.each do |massage| %>
-<h1><%= massage.name %></h1>
-<h2><%= number_to_currency(massage.price, unit: "$", precision: 2) %></h2>
-<ul>
-  <li><%= massage.description %></li>
-  <li><%= massage.duration %></li>
-</ul>
-<button><a href="/appointments?massage_id=<%= massage.id %>">Book Individual Session!</a></button>
-<% end %>
+<div class="container">
+  <h1 class="text-center">Packages</h1>
+  <p class="lead text-center">These are the different packages I offer, accommodated to your needs.</p>
+  <div class="row px-3">
+    <% @massages.each do |massage| %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <% if massage.id == 1 %>
+            <img src="/jointpain.jpeg" class="card-img-top" width="400" height="400" alt="<%= massage.name %>">
+          <% elsif massage.id == 2 %>
+            <img src="/fullbodymassage.jpg" class="card-img-top" width="400" height="400" alt="<%= massage.name %>">
+          <% else %>
+            <img src="/massagewithstones.jpg" class="card-img-top" width="400" height="400" alt="<%= massage.name %>">
+          <% end %>
+          <div class="card-body d-flex flex-column">
+            <h2 class="card-title text-center"><%= massage.name %></h2>
+            <h3 class="text-center"><%= number_to_currency(massage.price, unit: "$", precision: 2) %></h3>
+            <ul>
+              <li><%= massage.description %></li>
+              <li><%= massage.duration %></li>
+            </ul>
+            <div class="mt-auto d-flex justify-content-center">
+              <a href="/appointments?massage_id=<%= massage.id %>" class="btn btn-primary">Book Individual Session!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
