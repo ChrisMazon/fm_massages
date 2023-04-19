@@ -16,5 +16,5 @@ services:
         fromDatabase:
           name: fmmassages
           property: connectionString
-      - key: e73ce30cd97c4e25c7d1bd0d9dc2a819
+      - key: RAILS_MASTER_KEY
         sync: false
