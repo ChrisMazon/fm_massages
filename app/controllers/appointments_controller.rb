@@ -11,7 +11,7 @@ class AppointmentsController < ApplicationController
 
       render({ :template => "appointments/dashboard.html.erb" })
     else
-      redirect_to("/", { :alert => "Nah b." })
+      redirect_to("/", { :alert => "You don't have access." })
     end
   end
 

@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   get("/cancel_user_account/:an_id", { :controller => "user_authentication", :action => "admin_destroy" }) #test
 
   # ------------------------------
-
+p
   # SIGN IN FORM
   get("/user_sign_in", { :controller => "user_authentication", :action => "sign_in_form" })
   # AUTHENTICATE AND STORE COOKIE

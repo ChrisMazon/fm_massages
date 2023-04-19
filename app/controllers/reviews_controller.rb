@@ -15,11 +15,15 @@ class ReviewsController < ApplicationController
 
     @the_review = matching_reviews.at(0)
 
-    if @current_user.id != @the_review.user_id
+    if @the_review.nil?
+      redirect_to("/reviews", { :alert => "Review doesn't exist!"})
+    elsif @current_user.admin == true 
+      render(:template => "reviews/show.html.erb", :locals => { :alert => "Viewing through admin view." })
+    elsif @current_user.id != @the_review.user_id
       redirect_to("/reviews", { :alert => "Not your review!"})
     else
-      render({ :template => "reviews/show.html.erb" })
-    end
+      render(:template => "reviews/show.html.erb")
+    end    
   end
 
   def create
