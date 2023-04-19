@@ -1,15 +1,14 @@
-<div class="container">
+<div class="container pt-4">
   <div class="row">
     <div class="col-12">
       <h1 class="text-center">
-        All reviews
+        All Reviews
       </h1>
     </div>
   </div>
 </div>
 
-<hr>
-<h3 class="lead text-center">Want to leave feedback? Add a review! 😊</h3>
+<h3 class="lead text-center pt-4">Want to leave feedback? Add a review! 😊</h3>
 <!-- Button trigger modal -->
 <% if @current_user == nil %>
   <h3 class="lead text-center">Please sign in to leave a review! 👍</h3>
@@ -110,14 +109,12 @@
       <% end %>
     </div>
 
-    <hr>
   <% else %>
     <p class="px-3">You currently have no reviews! 🥲</p>
-    <hr>
   <% end %>
 <% end %>
 
-<h2 class="px-3">Reviews (<%= @list_of_reviews.count%>)</h2>
+<h2 class="px-3 pt-5">Reviews (<%= @list_of_reviews.count%>)</h2>
 <div class="card mb-3">
   <div class="card-body">
     <% @list_of_reviews.each do |a_review| %>
@@ -135,10 +132,10 @@
           <h6 class="card-subtitle mb-2 text-muted"><%= a_review.massage.name if a_review.massage.present? %></h6>
           <p class="card-text"><%= a_review.body %></p>
           <p class="card-text"><small class="text-muted"><%= time_ago_in_words(a_review.created_at) %> ago</small></p>
-          <% if @current_user != nil && a_review.user_id == @current_user.id %>
-            <a href="/reviews/<%= a_review.id %>" class="card-link">Show details</a>
-          <% elsif @current_user.admin == true %>
-            <a href="/reviews/<%= a_review.id %>" class="card-link">Show details</a>
+          <% if @current_user.present? %>
+            <% if a_review.user_id == @current_user.id || @current_user.admin == true %>
+              <a href="/reviews/<%= a_review.id %>" class="card-link">Show details</a>
+            <% end %>
           <% end %>
         </div>
       </div>

@@ -18,7 +18,7 @@
   <body>
     <div class="main-content">
       <% if @current_user == nil %>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container-fluid">
             <a class="navbar-brand" href="/home">
               <img src="/fmlogo2.jpeg" width="30" height="30" alt="FMMassages logo" class="d-inline-block align-text-middle me-2">
@@ -60,7 +60,7 @@
       <% else %>
         <% if @current_user.admin == true %>
 
-          <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
               <a class="navbar-brand" href="/home">
                 <img src="/fmlogo2.jpeg" width="30" height="30" alt="FMMassages logo" class="d-inline-block align-text-middle me-2">
@@ -102,7 +102,7 @@
             </div>
           </nav>
         <% else %>
-          <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
               <a class="navbar-brand" href="/home">
                 <img src="/fmlogo2.jpeg" width="30" height="30" alt="FMMassages logo" class="d-inline-block align-text-middle me-2">
@@ -144,13 +144,13 @@
       <% end %>
 
       <% if notice.present? %>
-        <div class="alert alert-success py-2 px-3" role="notice">
+        <div class="alert alert-success" role="notice">
           <%= notice %>
         </div>
       <% end %>
 
       <% if alert.present? %>
-        <div class="alert alert-danger py-2 px-3" role="alert">
+        <div class="alert alert-danger" role="alert">
           <%= alert %>
         </div>
       <% end %>
