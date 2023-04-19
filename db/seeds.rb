@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+admin = User.find_by(email: "cmazon32@gmail.com")
+if admin.nil?
+  puts "admin user not found. creating admin user."
+  User.create(email: "cmazon32@gmail.com", password: "password")
+end
